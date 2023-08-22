@@ -7,7 +7,7 @@ import { errorHandler } from "./api/middlewares/errorHandler";
 const port = 3000;
 
 dotenv.config();
-const app: Express = express();
+export const app: Express = express();
 app.use(cors());
 app.use(express.json());
 
