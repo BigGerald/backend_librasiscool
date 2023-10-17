@@ -4,7 +4,7 @@
   "description": "",
   "main": "src/main.ts",
   "scripts": {
-    "start": "nodemon src/main.ts",
+    "start": "nodemon src/index.ts",
     "test": "npx jest --coverage",
     "vercel-build": "echo hello"
   },
