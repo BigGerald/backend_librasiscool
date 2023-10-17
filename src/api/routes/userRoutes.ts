@@ -4,6 +4,6 @@ import { tokenValidator } from "../middlewares/tokenValidator";
 
 const userRoutes: Router = Router();
 
-userRoutes.get("/", authController.showAllUsers);
+userRoutes.get("/:userId", authController.getUserData);
 
 export { userRoutes };
