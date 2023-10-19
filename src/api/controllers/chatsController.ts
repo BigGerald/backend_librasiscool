@@ -47,7 +47,6 @@ const getAllChatsByUser = async (
 ) => {
   try {
     const userId = Number(req.params.userId);
-    console.log(userId);
     const chats = await chatsService.getAllChatsByUser(userId);
 
     res.status(httpStatus.OK).json(chats);
