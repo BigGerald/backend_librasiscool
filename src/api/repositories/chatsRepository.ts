@@ -1,6 +1,7 @@
 import knex from "knex";
 import config from "../../../knexfile";
 import { Chat } from "../../types";
+import { all } from "axios";
 
 const knexInstance = knex(config);
 
@@ -8,6 +9,11 @@ const indexByUser = async (user_id: number): Promise<Chat[]> => {
   const allChats: Chat[] = await knexInstance("chats")
     .select("*")
     .where({ user_id });
+
+  if (allChats[0])
+    return allChats.sort(
+      (a, b) => (b.created_at?.getTime() || 0) - (a.created_at?.getTime() || 0)
+    );
 
   return allChats;
 };
