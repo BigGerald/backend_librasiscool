@@ -7,5 +7,6 @@ const userRoutes: Router = Router();
 
 userRoutes.use("/:userId/chats", chatsRoutes);
 userRoutes.get("/", authController.showAllUsers);
+userRoutes.get("/:userId", authController.getUserData);
 
 export { userRoutes };
