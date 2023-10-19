@@ -37,6 +37,21 @@ const getChatMessages = async (
   }
 };
 
+const getAllChatsByUser = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const userId = Number(req.params.userId);
+    const chats = await chatsService.getAllChatsByUser(userId);
+
+    res.status(httpStatus.OK).json(chats);
+  } catch (error: unknown) {
+    next(error);
+  }
+};
+
 const addMessage = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const chatId = Number(req.params.chatId);
@@ -56,4 +71,5 @@ export default {
   getChatData,
   getChatMessages,
   addMessage,
+  getAllChatsByUser,
 };
