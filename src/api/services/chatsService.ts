@@ -11,7 +11,6 @@ const createNewChat = async (chatData: Chat): Promise<Chat> => {
       message: "User not found",
       status: httpStatus.BAD_REQUEST,
     });
-
   const newChat = await chatRepository.insertNewChat(chatData);
   return newChat;
 };
