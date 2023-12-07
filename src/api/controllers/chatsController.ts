@@ -1,14 +1,19 @@
+import { tokenValidator } from "./../middlewares/tokenValidator";
 import httpStatus from "http-status";
 import { NextFunction, Request, Response } from "express";
 import chatsService from "../services/chatsService";
 import historyService from "../services/historyService";
 import { Chat } from "../../types";
+import authService from "../services/authService";
 
 //precisamos voltar aq depois pravalidar o usuario que esta cadastrando o chat e validar automaticamente
 const createChat = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const chatData: Chat = req.body;
-    chatData.user_id = Number(req.params.userId);
+    const tokenData = await authService.getTokenData(
+      req.headers.authorization?.split(" ")[1]!
+    );
+    chatData.user_id = tokenData.id;
     const newChat = await chatsService.createNewChat(req.body);
     res.status(httpStatus.CREATED).json(newChat);
   } catch (error: unknown) {
@@ -46,8 +51,13 @@ const getAllChatsByUser = async (
   next: NextFunction
 ) => {
   try {
-    const userId = Number(req.params.userId);
-    const chats = await chatsService.getAllChatsByUser(userId);
+
+    const userData = await authService.getTokenData(
+      req.headers.authorization?.split(" ")[1]!
+    );
+    console.log(userData.id);
+    const chats = await chatsService.getAllChatsByUser(userData.id);
+
 
     res.status(httpStatus.OK).json(chats);
   } catch (error: unknown) {
@@ -69,10 +79,21 @@ const addMessage = async (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
+const deleteChat = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const chatId = Number(req.params.chatId);
+    const result = await chatsService.deleteById(chatId);
+    res.status(httpStatus.OK).json(result);
+  } catch (error: unknown) {
+    next(error);
+  }
+};
+
 export default {
   createChat,
   getChatData,
   getChatMessages,
   addMessage,
   getAllChatsByUser,
+  deleteChat,
 };
