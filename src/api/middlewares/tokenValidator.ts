@@ -11,7 +11,7 @@ export const tokenValidator = async (
 ) => {
   try {
     const token = req.headers.authorization?.split(" ")[1];
-    jwt.verify(token!, process.env.SECRET!);
+    jwt.verify(token!, "K7s9P3x2Y5");
     next();
   } catch (error) {
     next(error);

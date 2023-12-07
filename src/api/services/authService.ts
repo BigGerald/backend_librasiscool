@@ -69,7 +69,7 @@ const login = async (user: UserDataBase) => {
     });
   }
 
-  const mySecret = process.env.SECRET ?? "testeDeDesenvolvimento";
+  const mySecret = "K7s9P3x2Y5";
 
   const newToken = jwt.sign(findUser, mySecret, { expiresIn: "1d" });
 
@@ -79,7 +79,7 @@ const login = async (user: UserDataBase) => {
 const getTokenData = async (
   token: string
 ): Promise<{ id: number; name: string }> => {
-  const tokenData: any = jwt.verify(token, process.env.SECRET!);
+  const tokenData: any = jwt.verify(token, "K7s9P3x2Y5");
   return {
     id: tokenData.id,
     name: tokenData.name,
