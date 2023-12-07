@@ -7,19 +7,34 @@ const userRoutes: Router = Router();
 
 userRoutes.get("/", authController.showAllUsers);
 
-userRoutes.get("/:userId", authController.getUserData);
+userRoutes.get("/info", tokenValidator, authController.getUserData);
 
-userRoutes.get("/:userId/chats/:chatId", chatsController.getChatData);
+userRoutes.get("/chats/:chatId", tokenValidator, chatsController.getChatData);
 
 userRoutes.get(
-  "/:userId/chats/:chatId/messages",
+  "/chats/:chatId/messages",
+  tokenValidator,
   chatsController.getChatMessages
 );
 
-userRoutes.get("/:userId/chats", chatsController.getAllChatsByUser);
+userRoutes.get("/chats", tokenValidator, chatsController.getAllChatsByUser);
 
-userRoutes.post("/:userId/chats", chatsController.createChat);
+userRoutes.post("/register", authController.register);
 
-userRoutes.post("/:userId/chats/:chatId/messages", chatsController.addMessage);
+userRoutes.post("/login", authController.login);
+
+userRoutes.post("/chats", tokenValidator, chatsController.createChat);
+
+userRoutes.post(
+  "/chats/:chatId/messages",
+  tokenValidator,
+  chatsController.addMessage
+);
+
+userRoutes.delete(
+  "/chats/delete/:chatId",
+  tokenValidator,
+  chatsController.deleteChat
+);
 
 export { userRoutes };

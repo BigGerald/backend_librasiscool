@@ -33,4 +33,9 @@ const findById = async (id: number): Promise<Chat> => {
   return chatData;
 };
 
-export default { createNewChat, findById, getAllChatsByUser };
+const deleteById = async (chatId: number) => {
+  chatRepository.deleteChat(chatId);
+  return { message: "chat apagado com sucesso" };
+};
+
+export default { createNewChat, findById, getAllChatsByUser, deleteById };
