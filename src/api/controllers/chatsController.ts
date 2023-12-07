@@ -51,11 +51,13 @@ const getAllChatsByUser = async (
   next: NextFunction
 ) => {
   try {
+
     const userData = await authService.getTokenData(
       req.headers.authorization?.split(" ")[1]!
     );
     console.log(userData.id);
     const chats = await chatsService.getAllChatsByUser(userData.id);
+
 
     res.status(httpStatus.OK).json(chats);
   } catch (error: unknown) {
